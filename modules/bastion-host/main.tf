@@ -5,14 +5,14 @@
 resource "google_compute_instance" "bastion_host" {
   project      = var.project
   name         = var.instance_name
-  machine_type = var.machine_type
+  machine_type = "t2a-standard-1"
   zone         = var.zone
 
   tags = [var.tag]
 
   boot_disk {
     initialize_params {
-      image = var.source_image
+      image = "ubuntu-os-cloud/ubuntu-2204-lts-arm64"
     }
   }
 
@@ -24,8 +24,6 @@ resource "google_compute_instance" "bastion_host" {
       nat_ip = var.static_ip
     }
   }
-
-  metadata_startup_script = var.startup_script
 
   metadata = {
     enable-oslogin = "TRUE"
